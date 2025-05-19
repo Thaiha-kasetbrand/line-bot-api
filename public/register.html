@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ลงทะเบียนพนักงาน</title>
+  <meta charset="UTF-8">
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>📋 ลงทะเบียนพนักงาน</h2>
+
+  <form id="registerForm">
+    <input type="text" id="name" placeholder="ชื่อจริง" required>
+    <input type="text" id="surname" placeholder="นามสกุล" required>
+    <input type="text" id="nickname" placeholder="ชื่อเล่น" required>
+    <input type="text" id="department" placeholder="แผนก" required>
+    <input type="text" id="employeeCode" placeholder="รหัสพนักงาน" required>
+
+
+    <!-- hidden fields from LINE -->
+    <input type="hidden" id="displayName">
+    <input type="hidden" id="userId">
+
+    <button type="submit">✅ ลงทะเบียน</button>
+  </form>
+
+  <p id="result"></p>
+
+  <script>
+    async function main() {
+      console.log("🚀 เริ่ม init LIFF...");
+      await liff.init({ liffId: "2007435295-n4vGjQLl" });
+      console.log("✅ LIFF init สำเร็จ");
+
+      const profile = await liff.getProfile();
+      console.log("👤 Profile ได้แล้ว:", profile);
+      document.getElementById("displayName").value = profile.displayName;
+      document.getElementById("userId").value = profile.userId;
+
+      document.getElementById("registerForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        console.log("📨 ปุ่ม submit ถูกกด");
+
+        const payload = {
+          displayName: document.getElementById("displayName").value,
+          userId: document.getElementById("userId").value,
+          name: document.getElementById("name").value,
+          surname: document.getElementById("surname").value,
+          nickname: document.getElementById("nickname").value,
+          department: document.getElementById("department").value,
+          employeeCode: document.getElementById("employeeCode").value
+        };
+
+        console.log("📦 payload ที่จะส่ง:", payload);
+
+        try {
+          const res = await fetch("http://localhost:5000/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+
+          const result = await res.json();
+          console.log("✅ ได้ผลลัพธ์กลับ:", result);
+          document.getElementById("result").textContent = result.message || result.error;
+        } catch (err) {
+          console.error("❌ fetch error:", err);
+          document.getElementById("result").textContent = "เกิดข้อผิดพลาดในการส่งข้อมูล";
+        }
+      });
+    }
+
+    main();
+  </script>
+
+</body>
+
+</html>
