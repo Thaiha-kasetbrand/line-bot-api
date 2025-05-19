@@ -13,7 +13,7 @@ firebase.json
 .firebaserc
 
 # Credentials
-credentials.json
+# credentials.json
 
 # Firebase config
 

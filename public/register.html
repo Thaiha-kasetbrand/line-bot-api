@@ -24,7 +24,7 @@
 </head>
 
 <body>
-  <h2>📋 ลงทะเบียนพนักงาน</h2>
+  <h2>📋 ลงทะเบียนพนักงาน (v2)</h2>
 
   <form id="registerForm">
     <input type="text" id="name" placeholder="ชื่อจริง" required>
@@ -71,7 +71,7 @@
         console.log("📦 payload ที่จะส่ง:", payload);
 
         try {
-          const res = await fetch("http://localhost:5000/register", {
+          const res = await fetch("https://line-bot-api-g9ty.onrender.com/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
