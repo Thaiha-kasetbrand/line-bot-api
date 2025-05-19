@@ -8,7 +8,7 @@ def write_to_sheet(data):
     client = gspread.authorize(creds)
 
     # เปิด Google Sheet
-    sheet = client.open_by_key("YOUR_SHEET_ID").sheet1
+    sheet = client.open_by_key("1wE_j1tnjTK8C7WOxf5KvHJY6_GMYySQ-B4SlixHHyPo").sheet1
 
     # ✅ ดึง userId ทั้งหมดใน column B (index 2)
     existing_user_ids = sheet.col_values(2)
