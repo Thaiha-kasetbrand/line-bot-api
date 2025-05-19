@@ -4,16 +4,20 @@ import traceback
 
 app = Flask(__name__)
 
-@app.route("/register", methods=["POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
+    if request.method == "GET":
+        return "🔒 โปรดใช้ POST ในการลงทะเบียน", 405
+
     try:
         data = request.json
         write_to_sheet(data)
         return jsonify({"message": "✅ Registered successfully"}), 200
     except Exception as e:
         print("🔥 Error in /register")
-        traceback.print_exc()  # <--- เพิ่มบรรทัดนี้!
+        traceback.print_exc()
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     import os
