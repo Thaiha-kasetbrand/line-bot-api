@@ -9,6 +9,8 @@ firebase-debug.*.log*
 
 # Firebase cache
 .firebase/
+firebase.json
+.firebaserc
 
 # Credentials
 credentials.json
@@ -78,3 +80,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Python cache
+__pycache__/
